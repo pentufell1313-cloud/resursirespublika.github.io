@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Алмазный меридиан — полезные ископаемые Якутии</title>
+<link href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css" rel="stylesheet">
+<style>
+:root{--bg:#06101b;--panel:#0b1b2c;--panel2:#10253a;--line:#28445d;--text:#f1f7fd;--muted:#9eb1c4;--accent:#65d5ff;--good:#62e6a1}
+*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+#app{height:100vh;display:grid;grid-template-columns:390px 1fr}
+#side{padding:18px 18px 24px;background:linear-gradient(180deg,#091726,#06101b);border-right:1px solid var(--line);overflow:auto;z-index:20}
+.brand{display:flex;gap:12px;align-items:center}.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#efffff,#59caff);color:#07131f;display:grid;place-items:center;font-size:29px;font-weight:800;box-shadow:0 5px 18px #0004}h1{font-size:22px;line-height:1.03;margin:0}.small{font-size:11px;color:var(--muted);margin-top:4px}.badge{display:inline-block;margin:13px 0 8px;padding:5px 9px;border:1px solid #31546e;border-radius:20px;color:#c5edff;font-size:11px;background:#0b2034}.intro{font-size:12px;color:#b7c8d9;line-height:1.5;margin-bottom:12px}
+input[type=search]{width:100%;padding:12px 13px;border-radius:11px;border:1px solid var(--line);background:#081827;color:#fff;outline:none}input[type=search]:focus{border-color:#57c9f3;box-shadow:0 0 0 3px #57c9f31c}
+.title{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#7893aa;margin:17px 0 8px}.layer{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:9px;font-size:13px;cursor:pointer}.layer:hover{background:#10263b}.layer input{accent-color:#61d2ff}
+.key{width:25px;height:25px;display:grid;place-items:center;flex:none}.key svg{width:23px;height:23px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:7px}.stat{background:#0c2033;border:1px solid #21405a;border-radius:11px;padding:9px}.stat b{font-size:18px;display:block}.stat span{font-size:10px;color:var(--muted)}
+.how,.sources,.research{font-size:11px;line-height:1.55;color:#b0c1d2}.research{background:#0a1d30;border:1px solid #23435d;border-radius:11px;padding:10px}.research b{color:#e7f6ff}.sources a{color:#8fdcff;text-decoration:none}.sources a:hover{text-decoration:underline}
+.buttonrow{display:grid;grid-template-columns:1fr 1fr;gap:7px}.btn{border:1px solid var(--line);background:#0d2236;color:#dff6ff;border-radius:9px;padding:9px 7px;font-size:11px;cursor:pointer}.btn:hover{background:#12304a;border-color:#4d7898}
+#map{height:100%;position:relative}.map-title{position:absolute;top:15px;left:15px;z-index:5;background:#091a2be8;border:1px solid var(--line);border-radius:13px;padding:11px 14px;box-shadow:0 8px 25px #0005}.map-title b{font-size:13px}.map-title span{display:block;font-size:10px;color:#9eb1c4;margin-top:3px}.yak-label{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);z-index:3;pointer-events:none;text-align:center;text-shadow:0 2px 10px #000}.yak-label b{font-size:20px;letter-spacing:.03em}.yak-label span{display:block;font-size:10px;color:#c5d7e8;margin-top:2px}.legend{position:absolute;right:15px;top:15px;z-index:5;background:#091a2be8;border:1px solid var(--line);border-radius:13px;padding:9px 11px;font-size:10px;box-shadow:0 8px 25px #0005}.legend div{display:flex;align-items:center;gap:7px;margin:5px 0}.legicon{width:18px;height:18px;display:grid;place-items:center}.legicon svg{width:17px;height:17px}
+.marker{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:2px solid rgba(255,255,255,.98);box-shadow:0 0 0 2px rgba(0,0,0,.28),0 5px 16px rgba(0,0,0,.55);cursor:pointer;transition:.15s transform,.15s filter,.15s box-shadow;background:#123;pointer-events:auto;user-select:none}.marker:focus{outline:3px solid #fff;outline-offset:3px}.marker:active{transform:scale(.95)}.marker:hover{transform:scale(1.16);filter:brightness(1.15)}.marker.hidden{display:none}.marker svg{width:29px;height:29px;filter:drop-shadow(0 2px 3px #0009);pointer-events:none}.marker:hover,.marker:focus{transform:scale(1.18);filter:brightness(1.18);box-shadow:0 0 0 3px rgba(255,255,255,.45),0 7px 20px rgba(0,0,0,.62)}
+.photoBox{margin:0 0 10px;border-radius:10px;overflow:hidden;background:#dce8ef}.photoBox img{display:block;width:100%;height:145px;object-fit:cover}.photoCaption{font-size:9px;color:#718196;padding:5px 7px;background:#f4f7fa}.gallery{display:grid;grid-template-columns:1fr;gap:8px}.gallery-card{border:1px solid #21405a;background:#0c2033;border-radius:11px;overflow:hidden}.gallery-card a{display:block;color:inherit;text-decoration:none}.gallery-card img{display:block;width:100%;height:92px;object-fit:cover}.gallery-card div{padding:7px 8px}.gallery-card b{font-size:11px;display:block}.gallery-card span{font-size:9px;color:#9eb1c4;display:block;margin-top:2px}.credit{font-size:9px;color:#718196;margin-top:5px}.maplibregl-popup-content{color:#132236;border-radius:14px;padding:0;overflow:hidden;width:330px;box-shadow:0 12px 40px #0008}.popHead{padding:13px 15px 11px;background:linear-gradient(135deg,#f5fbff,#e9f5fb);border-bottom:1px solid #d7e2eb}.popHead h3{margin:0 0 3px;font-size:18px}.popType{font-size:11px;color:#21657f;font-weight:800}.pop{padding:12px 15px 14px}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.chip{font-size:10px;background:#edf5f8;border-radius:20px;padding:4px 7px;color:#2b5364}.grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:8px 0}.fact{background:#f4f7fa;border-radius:8px;padding:7px}.fact span{display:block;font-size:9px;color:#748598}.fact b{font-size:11px}.pop p{font-size:12px;line-height:1.45;margin:7px 0}.pop .src{font-size:9px;color:#718196;margin-top:9px;border-top:1px solid #e4e8ee;padding-top:7px}.pop .src a{color:#2b7595;text-decoration:none}.pop .src a:hover{text-decoration:underline}
+#toast{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:20;background:#091a2be8;border:1px solid var(--line);border-radius:10px;padding:8px 11px;font-size:11px;color:#c6d6e6;display:none}.north{position:absolute;bottom:16px;right:15px;z-index:5;width:35px;height:35px;border-radius:50%;background:#091a2be8;border:1px solid var(--line);display:grid;place-items:center;font-weight:800;color:#fff}
+@media(max-width:900px){#app{grid-template-columns:1fr}#side{position:absolute;left:0;top:0;bottom:0;width:335px;transform:translateX(-100%);transition:.2s;box-shadow:8px 0 30px #0008}.map-title{left:10px;top:10px}.legend{right:10px;top:10px}.yak-label b{font-size:16px}}
+#welcome{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 42%,#153b55 0,#071522 55%,#030a11 100%);display:grid;place-items:center;padding:20px}.welcome-card{width:min(650px,94vw);text-align:center;padding:42px 34px;border:1px solid #39627d;border-radius:28px;background:linear-gradient(145deg,#0c2438ee,#07131fee);box-shadow:0 30px 90px #0009}.welcome-gem{font-size:68px;line-height:1;color:#75ddff;text-shadow:0 0 35px #52d7ff88;margin-bottom:8px}.welcome-kicker{font-size:10px;letter-spacing:.2em;color:#7da8c2}.welcome-card h2{font-size:40px;margin:12px 0 5px}.welcome-card p{color:#b7cad9;margin:0 0 22px}.welcome-line{font-size:13px;color:#dcecf6;margin-bottom:25px}.welcome-card button{border:0;border-radius:13px;padding:13px 24px;font-weight:800;font-size:14px;background:linear-gradient(135deg,#8de8ff,#4db9e9);color:#06131e;cursor:pointer;box-shadow:0 10px 30px #3dc9ff33}.welcome-card button:hover{transform:translateY(-1px);filter:brightness(1.05)}.welcome-card small{display:block;color:#7894a8;font-size:10px;margin-top:15px;line-height:1.4}</style>
+</head>
+<body>
+<div id="welcome" class="welcome"><div class="welcome-card"><div class="welcome-gem">◇</div><div class="welcome-kicker">ИНТЕРАКТИВНЫЙ ИССЛЕДОВАТЕЛЬСКИЙ ПРОЕКТ</div><h2>Алмазный меридиан</h2><p>Полезные ископаемые Республики Саха (Якутия)</p><div class="welcome-line"><span>💎</span> алмазы&nbsp;&nbsp; <span>🪙</span> золото&nbsp;&nbsp; <span>🛢</span> нефть и газ</div><button onclick="startMap()">Начать исследование →</button><small>Нажми на любую тематическую иконку, чтобы открыть историю месторождения. Если у объекта есть фото — оно появится прямо в карточке.</small></div></div><div id="app">
+<aside id="side">
+  <div class="brand"><div class="logo">◇</div><div><h1>Алмазный меридиан</h1><div class="small">полезные ископаемые Республики Саха (Якутия)</div></div></div>
+  <div class="badge">Исследовательская карта • 2026</div>
+  <div class="intro">Интерактивная карта показывает минеральные ресурсы Республики Саха (Якутия): граница республики выделена отдельно, а ключевые объекты отмечены тематическими иконками. Нажми на иконку — откроется подробная карточка, а для некоторых объектов доступны фотографии.</div>
+  <input id="search" type="search" placeholder="Поиск: Мир, золото, Томтор..." oninput="filterData()">
+
+  <div class="title">Тематические слои</div>
+  <label class="layer"><input checked type="checkbox" onchange="setGroup('diamond',this.checked)"><span class="key" id="kdiamond"></span>Алмазы</label>
+  <label class="layer"><input checked type="checkbox" onchange="setGroup('gold',this.checked)"><span class="key" id="kgold"></span>Золото</label>
+  <label class="layer"><input checked type="checkbox" onchange="setGroup('oil',this.checked)"><span class="key" id="koil"></span>Нефть и газ</label>
+  <label class="layer"><input checked type="checkbox" onchange="setGroup('coal',this.checked)"><span class="key" id="kcoal"></span>Уголь</label>
+  <label class="layer"><input checked type="checkbox" onchange="setGroup('tin',this.checked)"><span class="key" id="ktin"></span>Олово</label>
+  <label class="layer"><input checked type="checkbox" onchange="setGroup('rare',this.checked)"><span class="key" id="krare"></span>Редкоземельные металлы</label>
+  <label class="layer"><input checked type="checkbox" onchange="setGroup('iron',this.checked)"><span class="key" id="kiron"></span>Железные руды</label>
+
+  <div class="title">Карта в цифрах</div>
+  <div class="stats">
+    <div class="stat"><b id="visibleCount">21</b><span>объект в каталоге</span></div>
+    <div class="stat"><b>7</b><span>тематических слоёв</span></div>
+    <div class="stat"><b>10+</b><span>видов сырья</span></div>
+    <div class="stat"><b>1</b><span>граница Якутии</span></div>
+  </div>
+
+  <div class="title">Как пользоваться</div>
+  <div class="how">1) Выбери слой. 2) Нажми на иконку месторождения. 3) В карточке смотри вид сырья, район, год открытия, этап освоения и краткую историю. 4) Поиск работает по названию и описанию. Карту можно двигать и масштабировать.</div>
+
+  <div class="buttonrow" style="margin-top:10px"><button class="btn" onclick="showAll()">Показать все</button><button class="btn" onclick="focusYakutia()">Показать Якутию</button></div>
+
+  <div class="title">Мини-исследование</div>
+  <div class="research"><b>Что видно на карте?</b><br>Алмазные объекты заметно группируются в западной и центрально-западной части республики; нефтегазовые объекты — преимущественно в юго-западной части; угольные объекты представлены в Южной Якутии; олово и редкоземельные ресурсы показаны в северной и северо-восточной части. Это наблюдение сделано по выбранным объектам карты и не заменяет полный государственный кадастр.</div>
+
+  <div class="title">Важно о данных</div>
+  <div class="how">Координаты используются как картографические точки. Для части объектов точка обозначает район месторождения, а не границу лицензионного участка. Год открытия приводится только там, где он найден в использованном источнике; если источник его не содержит, это прямо указано в карточке.</div>
+
+  <div class="title">Фотоматериалы</div>
+  <div class="gallery">
+    <div class="gallery-card"><a href="https://www.alrosa.ru/upload/iblock/8ee/xkri98c4lmq155dcixgjci09m2b0vpzk/pic.jpg" target="_blank" rel="noopener"><img src="https://www.alrosa.ru/upload/iblock/8ee/xkri98c4lmq155dcixgjci09m2b0vpzk/pic.jpg" alt="Карьер Мир в Мирном"><div><b>Карьер «Мир»</b><span>Мирный • фото АЛРОСА</span></div></a></div>
+    <div class="gallery-card"><a href="https://www.alrosa.ru/upload/2025/5375164555086393897.jpg" target="_blank" rel="noopener"><img src="https://www.alrosa.ru/upload/2025/5375164555086393897.jpg" alt="Подземный рудник Удачный"><div><b>«Удачная»</b><span>Подземная добыча • фото АЛРОСА</span></div></a></div>
+    <div class="gallery-card"><a href="https://www.alrosa.ru/upload/iblock/e22/jqjgkuh6fyibc558reio36u1qsad8vu7/%D0%A4%D0%BE%D1%82%D0%BE%20%D0%B2%20%D1%82%D0%B5%D0%BB%D0%BE%20%D1%80%D0%B5%D0%BB%D0%B8%D0%B7%D0%B0%20%28%D0%B2%20%D0%BA%D0%BE%D0%BD%D0%B5%D1%86%29.jpg" target="_blank" rel="noopener"><img src="https://www.alrosa.ru/upload/iblock/e22/jqjgkuh6fyibc558reio36u1qsad8vu7/%D0%A4%D0%BE%D1%82%D0%BE%20%D0%B2%20%D1%82%D0%B5%D0%BB%D0%BE%20%D1%80%D0%B5%D0%BB%D0%B8%D0%B7%D0%B0%20%28%D0%B2%20%D0%BA%D0%BE%D0%BD%D0%B5%D1%86%29.jpg" alt="Крупный алмаз"><div><b>Крупный алмаз Якутии</b><span>Фотоматериал АЛРОСА</span></div></a></div>
+  </div>
+  <div class="credit">Фотографии открываются с официальных страниц АЛРОСА; авторство и права принадлежат правообладателям.</div>
+
+  <div class="title">Источники</div>
+  <div class="sources">
+    <div>• <a href="https://www.alrosa.ru/about/history/" target="_blank">АЛРОСА — история и алмазные объекты</a></div>
+    <div>• <a href="https://www.gazprom.ru/projects/chayandinskoye/" target="_blank">Газпром — Чаяндинское месторождение</a></div>
+    <div>• <a href="https://old.bigenc.ru/geology/text/2652405" target="_blank">БРЭ — Нежданинское</a></div>
+    <div>• <a href="https://old.bigenc.ru/geology/text/1948477" target="_blank">БРЭ — Депутатское</a></div>
+    <div>• <a href="https://reports.geologyscience.ru/kadastr_view_one.php?id=1457" target="_blank">Паспорт РГФ — Депутатское</a></div>
+    <div>• <a href="https://reports.geologyscience.ru/kadastr_view_one.php?id=1393" target="_blank">Паспорт РГФ — Кючус</a></div>
+    <div>• <a href="https://openfreemap.org/" target="_blank">OpenFreeMap / OpenStreetMap — картографическая основа</a></div>
+    <div>• <a href="https://services.arcgis.com/8veDRDlhXWywYP3S/ArcGIS/rest/services/Russian_Territories_WFL1/FeatureServer/0" target="_blank">ArcGIS — контур Республики Саха (Якутия)</a></div>
+  </div>
+</aside>
+<main id="map">
+  <div class="map-title"><b>Республика Саха (Якутия)</b><span>Минерально-сырьевой слой • нажми на иконку</span></div>
+  <div class="legend">
+    <div><span class="legicon" id="ldiamond"></span>Алмазы</div><div><span class="legicon" id="lgold"></span>Золото</div><div><span class="legicon" id="loil"></span>Нефть и газ</div><div><span class="legicon" id="lcoal"></span>Уголь</div><div><span class="legicon" id="ltin"></span>Олово</div><div><span class="legicon" id="lrare"></span>Редкоземельные</div><div><span class="legicon" id="liron"></span>Железные руды</div>
+  </div>
+  <div class="yak-label"><b>РЕСПУБЛИКА САХА (ЯКУТИЯ)</b><span>территория выделена контуром</span></div>
+  <div class="north">N</div>
+  <div id="toast">Картографическая основа загружается…</div>
+</main>
+</div>
+<script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js"></script>
+<script>
+const C={diamond:'#7ce8ff',gold:'#f3c64d',oil:'#b68cff',coal:'#66717c',tin:'#cbd5df',rare:'#62e6a1',iron:'#d98962'};
+const NAMES={diamond:'Алмазы',gold:'Золото',oil:'Нефть и газ',coal:'Уголь',tin:'Олово',rare:'Редкоземельные металлы',iron:'Железные руды'};
+function svgIcon(g){
+ const c=C[g];
+ const shapes={
+ diamond:`<polygon points="12,1 22,8 18,20 6,20 2,8" fill="${c}" stroke="#fff" stroke-width="1.2"/><path d="M2 8h20M6 20 12 8l6 12M12 1v7" fill="none" stroke="#2b6174" stroke-width="1"/>`,
+ gold:`<rect x="4" y="5" width="16" height="13" rx="2" fill="${c}" stroke="#fff" stroke-width="1.2"/><path d="M7 9h10M7 13h6" stroke="#7c5b00" stroke-width="1.3"/><circle cx="17" cy="15" r="2" fill="#fff6b3"/>`,
+ oil:`<path d="M12 2C9 7 5 10 5 14a7 7 0 0 0 14 0c0-4-4-7-7-12Z" fill="${c}" stroke="#fff" stroke-width="1.2"/><path d="M9 15c1 2 4 2 5 0" fill="none" stroke="#6a4e9c" stroke-width="1"/>`,
+ coal:`<path d="M4 7 10 3l9 3 3 8-6 7H7l-4-8Z" fill="${c}" stroke="#fff" stroke-width="1.2"/><path d="m7 7 6 2 3 5-4 4-5-3Z" fill="#313a43"/>`,
+ tin:`<path d="M5 4h14l2 4v10H3V8l2-4Z" fill="${c}" stroke="#fff" stroke-width="1.2"/><path d="M5 9h14M8 13h8" stroke="#687784" stroke-width="1"/>`,
+ rare:`<circle cx="12" cy="12" r="4" fill="${c}" stroke="#fff" stroke-width="1.2"/><circle cx="12" cy="12" r="9" fill="none" stroke="#fff" stroke-width="1"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4" stroke="#fff" stroke-width="1"/>`,
+ iron:`<path d="M5 6 11 3l8 3 3 8-6 7H7l-4-7Z" fill="${c}" stroke="#fff" stroke-width="1.2"/><path d="M8 8h7l3 4-3 4H9l-2-4Z" fill="#9c4c2d"/>`
+ };
+ return `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${shapes[g]}</svg>`;
+}
+['diamond','gold','oil','coal','tin','rare','iron'].forEach(g=>{document.getElementById('k'+g).innerHTML=svgIcon(g);document.getElementById('l'+g).innerHTML=svgIcon(g)});
+
+const D=[
+{name:'Мир',group:'diamond',type:'Алмазы — кимберлитовая трубка',lat:62.535,lng:113.966,district:'Мирнинский район',found:'1955',develop:'Открыта в 1955 г.; промышленная отработка началась в 1957 г.',text:'Один из самых известных алмазных объектов Якутии. Трубка «Мир» была открыта в июне 1955 года.',source:'АЛРОСА',url:'https://www.alrosa.ru/about/history/'},
+{name:'Удачная',group:'diamond',type:'Алмазы — кимберлитовая трубка',lat:66.434,lng:112.316,district:'Мирнинский район',found:'1955',develop:'Открыта в 1955 г.; открытый способ — с 1967 г.; подземный рудник — с 2014 г.',text:'Крупный алмазный объект Далдыно-Алакитского района. По данным АЛРОСА, месторождение открыто в 1955 году.',source:'АЛРОСА',url:'https://alrosa.ru/press-center/news/2025/dobychu-almazov-na-znamenitoy-trubke-udachnaya-v-yakutii-prodlyat-do-2055-goda/'},
+{name:'Айхал',group:'diamond',type:'Алмазы — кимберлитовая трубка',lat:65.926,lng:111.501,district:'Мирнинский район',found:'1960',develop:'Рудник «Айхал» создан в 1961 г.; объект входит в Айхальский ГОК.',text:'Кимберлитовая трубка Айхал — один из ключевых алмазных объектов северо-западной Якутии.',source:'АЛРОСА',url:'https://alrosa.ru/about/history/'},
+{name:'Юбилейная',group:'diamond',type:'Алмазы — кимберлитовая трубка',lat:66.001,lng:111.234,district:'Мирнинский район',found:'1975',develop:'Освоение началось во второй половине 1980-х гг.',text:'Крупная кимберлитовая трубка Айхальского ГОКа. Открыта в 1975 году.',source:'АЛРОСА',url:'https://alrosa.ru/about/history/'},
+{name:'Зарница',group:'diamond',type:'Алмазы — кимберлитовая трубка',lat:66.790,lng:112.440,district:'Мирнинский район',found:'1954',develop:'Промышленное освоение связано с развитием алмазной промышленности Якутии.',text:'Первое коренное месторождение алмазов, открытое в Якутии в 1954 году.',source:'АЛРОСА',url:'https://alrosa.ru/about/history/'},
+{name:'Нюрбинская',group:'diamond',type:'Алмазы — кимберлитовая трубка',lat:65.015,lng:117.080,district:'Нюрбинский район',found:'XX век',develop:'Осваивается в составе Нюрбинского ГОКа.',text:'Алмазный объект Нюрбинского района, входящий в производственную географию АЛРОСА.',source:'АЛРОСА',url:'https://alrosa.ru/about/history/'},
+{name:'Ботуобинская',group:'diamond',type:'Алмазы — кимберлитовая трубка',lat:65.010,lng:117.055,district:'Нюрбинский район',found:'XX век',develop:'Осваивается в составе Нюрбинского ГОКа.',text:'Кимберлитовая трубка Ботуобинская. В этой версии тип объекта исправлен: это коренная алмазная трубка, а не россыпь.',source:'АЛРОСА',url:'https://alrosa.ru/about/history/'},
+{name:'Верхне-Мунское',group:'diamond',type:'Алмазы — месторождение',lat:65.880,lng:113.850,district:'Мирнинский район',found:'XX век',develop:'Осваивается как современный алмазный объект; связанный рудник известен как «Заполярный».',text:'Крупный алмазный объект в северо-западной части Якутии.',source:'АЛРОСА',url:'https://alrosa.ru/about/history/'},
+{name:'Интернациональная',group:'diamond',type:'Алмазы — кимберлитовая трубка',lat:62.540,lng:113.970,district:'Мирнинский район',found:'1969',develop:'Подземная отработка связана с Мирнинским ГОКом.',text:'Кимберлитовая трубка в районе Мирного, связанная с подземным рудником «Интернациональный».',source:'АЛРОСА',url:'https://alrosa.ru/about/history/'},
+{name:'Нежданинское',group:'gold',type:'Золото — рудное месторождение',lat:62.517,lng:139.152,district:'Томпонский район',found:'1951',develop:'Опытная эксплуатация — с 1975 г.; дальнейшее освоение связано с подземной разработкой.',text:'Крупное золоторудное месторождение восточной Якутии. БРЭ указывает год открытия — 1951.',source:'Большая российская энциклопедия',url:'https://old.bigenc.ru/geology/text/2652405'},
+{name:'Кючус',group:'gold',type:'Золото — рудное месторождение',lat:69.701,lng:134.902,district:'Верхоянский и Усть-Янский районы',found:'1963',develop:'В 2025–2026 гг. продолжается подготовка проекта и инфраструктуры; промышленный запуск планируется позднее.',text:'Крупное золоторудное месторождение за Полярным кругом. Паспорт РГФ указывает золото, а также серебро и сурьму как дополнительные компоненты.',source:'Росгеолфонд / Селигдар',url:'https://reports.geologyscience.ru/kadastr_view_one.php?id=1393'},
+{name:'Куранах',group:'gold',type:'Золото — рудное поле',lat:58.843,lng:125.678,district:'Алданский район',found:'середина 1950-х',develop:'Первая очередь Куранахского ГОКа введена в 1965 г.',text:'Группа золотых месторождений Алданского района. В середине 1950-х были открыты месторождения Боковое и Центральное.',source:'Геологические справочные материалы',url:'https://ru.wikipedia.org/wiki/%D0%9A%D1%83%D1%80%D0%B0%D0%BD%D0%B0%D1%85'},
+{name:'Аллах-Юнь',group:'gold',type:'Золото — золоторудный район',lat:60.550,lng:137.550,district:'Восточная Якутия',found:'XX век',develop:'Исторический золоторудный район; точная дата открытия в использованном источнике не указана.',text:'Один из известных золоторудных районов Якутии.',source:'Государственные геологические материалы',url:'https://ru.wikipedia.org/wiki/%D0%9C%D0%Bесторождения_%D0%AF%D0%BA%D1%83%D1%82%D0%B8%D0%B8'},
+{name:'Среднеботуобинское',group:'oil',type:'Нефть, газ и конденсат',lat:61.668,lng:113.001,district:'Мирнинский район',found:'1970',develop:'Промышленная разработка — с 2011 г.',text:'Крупное нефтегазоконденсатное месторождение Западной Якутии. Открыто после получения промышленного притока газа в 1970 году.',source:'АО «РНГ» / Роснефть',url:'https://www.rngoil.ru/about/history'},
+{name:'Чаяндинское',group:'oil',type:'Нефть, газ и конденсат',lat:60.501,lng:111.651,district:'Ленский район',found:'1983',develop:'Лицензия — 2008 г.; добыча нефти — с 2014 г.; добыча газа — с 2019 г.',text:'Одно из крупнейших нефтегазоконденсатных месторождений Востока России и ресурсная база Якутского центра газодобычи.',source:'Газпром',url:'https://www.gazprom.ru/projects/chayandinskoye/'},
+{name:'Талаканское',group:'oil',type:'Нефть и газ',lat:59.868,lng:110.967,district:'Ленский район',found:'1984/1987',develop:'Промышленная разработка началась в 1990-х; после 2004 г. месторождение разрабатывает «Сургутнефтегаз».',text:'Крупное нефтегазовое месторождение юго-западной части Якутии. В источниках встречаются разные даты открытия; поэтому указаны обе версии.',source:'Energybase / геологические материалы',url:'https://energybase.ru/oil-gas-field/talakanskoe'},
+{name:'Эльгинское',group:'coal',type:'Каменный коксующийся уголь',lat:56.101,lng:130.701,district:'Нерюнгринский район',found:'1981',develop:'Современное освоение — открытым способом.',text:'Крупное угольное месторождение Южной Якутии; открыто в 1981 году.',source:'Справочные материалы / угольная отрасль',url:'https://ru.sberopedia.org/wiki/%D0%AD%D0%BB%D1%8C%D0%B3%D0%B8%D0%BD%D1%81%D0%BA%D0%BE%D0%B5_%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5_%D0%BC%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5'},
+{name:'Нерюнгринское',group:'coal',type:'Каменный коксующийся уголь',lat:56.685,lng:124.637,district:'Нерюнгринский район',found:'1951',develop:'Промышленное освоение началось в 1960-х; первая очередь крупного разреза — 1979 г.',text:'Угольное месторождение Южной Якутии. В 1951 году при геологической съёмке был открыт пласт «Пятиметровый».',source:'Нерюнгринский музей / геологические материалы',url:'https://www.museum-neru.ru/'},
+{name:'Депутатское',group:'tin',type:'Олово',lat:69.279,lng:139.915,district:'Усть-Янский район',found:'1947',develop:'Россыпная добыча — с 1951 г.; коренное месторождение разрабатывалось позднее.',text:'Известное оловянное месторождение Восточной Якутии. БРЭ указывает открытие в 1947 году.',source:'БРЭ / Росгеолфонд',url:'https://old.bigenc.ru/geology/text/1948477'},
+{name:'Томтор',group:'rare',type:'Редкоземельные металлы и ниобий',lat:71.033,lng:116.550,district:'Оленёкский район',found:'1977',develop:'Разведка продолжалась поэтапно; проект освоения участка Буранный предусматривает дальнейшее развитие.',text:'Крупное редкометалльное и редкоземельное месторождение на северо-западе Якутии. Открыто в 1977 году.',source:'Solidcore / геологические материалы',url:'https://www.solidcore-resources.com/ru/investors-and-media/news/press-releases/07-09-2020/'},
+{name:'Таёжное',group:'iron',type:'Железные руды',lat:56.600,lng:125.500,district:'Южная Якутия',found:'XX век',develop:'Точка обозначает район железорудного объекта; не является границей лицензии.',text:'Железорудные ресурсы Южной Якутии. Объект добавлен как дополнительная группа для полноты карты.',source:'Геологические материалы Якутии',url:'https://www.igds.ysn.ru/themes/IGDS/images/Monografii/Geotehnol.pdf'}
+];
+
+const PHOTOS={
+  'Мир':{img:'https://www.alrosa.ru/upload/iblock/8ee/xkri98c4lmq155dcixgjci09m2b0vpzk/pic.jpg',caption:'Карьер «Мир», Мирный. Фото: АЛРОСА',url:'https://www.alrosa.ru/sustainable-development/mir/'},
+  'Удачная':{img:'https://www.alrosa.ru/upload/2025/5375164555086393897.jpg',caption:'Подземный рудник «Удачный». Фото: АЛРОСА',url:'https://www.alrosa.ru/press-center/news/2025/dobychu-almazov-na-znamenitoy-trubke-udachnaya-v-yakutii-prodlyat-do-2055-goda/'},
+};
+D.forEach(o=>{if(PHOTOS[o.name]) o.photo=PHOTOS[o.name]});
+
+const map=new maplibregl.Map({container:'map',style:'https://tiles.openfreemap.org/styles/liberty',center:[126.5,65],zoom:4.15,maxZoom:10,attributionControl:true});
+map.addControl(new maplibregl.NavigationControl(),'top-right');
+map.addControl(new maplibregl.ScaleControl({maxWidth:120,unit:'metric'}),'bottom-left');
+const markers=[];
+const BOUNDARY_URL='https://services.arcgis.com/8veDRDlhXWywYP3S/ArcGIS/rest/services/Russian_Territories_WFL1/FeatureServer/0/query?where=1%3D1&outFields=NAME_1&f=geojson';
+function popupHTML(o){const photo=o.photo?`<div class="photoBox"><a href="${o.photo.url}" target="_blank" rel="noopener"><img src="${o.photo.img}" alt="${o.name}"></a><div class="photoCaption">${o.photo.caption} • нажми на фото для открытия источника</div></div>`:'';return `<div class="popHead"><h3>${o.name}</h3><div class="popType">${o.type}</div></div><div class="pop">${photo}<div class="chips"><span class="chip">${NAMES[o.group]}</span><span class="chip">${o.district}</span></div><div class="grid"><div class="fact"><span>Год открытия</span><b>${o.found}</b></div><div class="fact"><span>Освоение / ключевая дата</span><b>${o.develop}</b></div></div><p>${o.text}</p><p><b>Координаты:</b> ${o.lat.toFixed(3)}, ${o.lng.toFixed(3)}</p><div class="src">Источник: <a href="${o.url}" target="_blank" rel="noopener">${o.source}</a></div></div>`}
+function addMarkers(){D.forEach(o=>{const el=document.createElement('button');el.type='button';el.className='marker';el.style.background=C[o.group];el.title='Открыть карточку: '+o.name;el.setAttribute('aria-label','Открыть карточку месторождения '+o.name);el.dataset.group=o.group;el.dataset.text=(o.name+' '+o.type+' '+o.district+' '+o.text).toLowerCase();el.innerHTML=svgIcon(o.group);const popup=new maplibregl.Popup({offset:24,maxWidth:'360px',closeButton:true,closeOnClick:true}).setHTML(popupHTML(o));const m=new maplibregl.Marker({element:el,anchor:'center',clickTolerance:8}).setLngLat([o.lng,o.lat]).setPopup(popup).addTo(map);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();m.togglePopup()}});el.addEventListener('dblclick',e=>e.stopPropagation());markers.push({m,el,o})});updateCount()}
+function setGroup(g,on){markers.filter(x=>x.o.group===g).forEach(x=>x.el.style.display=on?'grid':'none');updateCount()}
+function filterData(){const q=document.getElementById('search').value.trim().toLowerCase();markers.forEach(x=>x.el.style.display=(!q||x.el.dataset.text.includes(q))?'grid':'none');updateCount()}
+function updateCount(){document.getElementById('visibleCount').textContent=markers.filter(x=>x.el.style.display!=='none').length}
+function showAll(){document.getElementById('search').value='';document.querySelectorAll('.layer input').forEach(x=>x.checked=true);markers.forEach(x=>x.el.style.display='grid');updateCount()}
+function focusYakutia(){map.fitBounds([[105.5,55.3],[163.1,77.2]],{padding:45,duration:1000})}
+map.on('load',()=>{
+ addMarkers();
+ map.addSource('yakutia-boundary',{type:'geojson',data:BOUNDARY_URL});
+ map.addLayer({id:'yakutia-fill',type:'fill',source:'yakutia-boundary',paint:{'fill-color':'#46bfe0','fill-opacity':0.055}});
+ map.addLayer({id:'yakutia-line',type:'line',source:'yakutia-boundary',paint:{'line-color':'#7ce8ff','line-width':2.2,'line-opacity':0.85}});
+ map.moveLayer('yakutia-fill');map.moveLayer('yakutia-line');
+ document.getElementById('toast').style.display='none';
+});
+map.on('error',e=>{if(e&&e.error){document.getElementById('toast').style.display='block';document.getElementById('toast').textContent='Если основа не загрузилась, проверь интернет. Карта использует OpenFreeMap, без tile.openstreetmap.org.'}});
+function startMap(){document.getElementById('welcome').style.opacity='0';setTimeout(()=>document.getElementById('welcome').remove(),220);map.resize();}
+</script>
+</body>
+</html>
